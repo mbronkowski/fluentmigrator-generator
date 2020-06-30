@@ -1,12 +1,11 @@
-function Add-FluentMigration
+function addMig
 {
     [CmdletBinding(DefaultParameterSetName = 'Name')]
     param (
         [parameter(Position = 0,
             Mandatory = $true)]
-        [string] $Name,
-        [string] $ProjectName,
-        [switch] $AddTimeStampToClassName)
+        [string] $Description,
+        [string] $ProjectName)
     $timestamp = (Get-Date -Format yyyyMMddHHmmss)
     $class_name_timestamp = (Get-Date -Format yyyyMMdd_HHmmss)
 
@@ -21,16 +20,13 @@ function Add-FluentMigration
         $project = Get-Project
     }
     
-    # if the $name parameter contains a string '{T}', then replace it with the timestamp but with a underscore between the
-    # yyyyMMdd part and the HHmmss part
-    if ($AddTimeStampToClassName) {
-        $name = [System.String]::Replace($name, "{T}", $class_name_timestamp)   
-    }
+	$name = "Mig_" + "$class_name_timestamp"
+
 
     $namespace = $project.Properties.Item("DefaultNamespace").Value.ToString() + ".Migrations"
     $projectPath = [System.IO.Path]::GetDirectoryName($project.FullName)
     $migrationsPath = [System.IO.Path]::Combine($projectPath, "Migrations")
-    $outputPath = [System.IO.Path]::Combine($migrationsPath, "$timestamp" + "_$name.cs")
+    $outputPath = [System.IO.Path]::Combine($migrationsPath, "$name" + ".cs")
 
     if (-not (Test-Path $migrationsPath))
     {
@@ -41,11 +37,17 @@ function Add-FluentMigration
 
 namespace $namespace
 {
-    [Migration($timestamp)]
+    [Migration($timestamp, `"$Description`")]
     public class $name : Migration
     {
         public override void Up()
         {
+		            Execute.Sql(
+@`"
+
+--insert migration script here
+
+`");
         }
 
         public override void Down()
@@ -58,4 +60,4 @@ namespace $namespace
     $project.Save($null)
 }
 
-Export-ModuleMember @( 'Add-FluentMigration' )
+Export-ModuleMember @( 'addMig' )

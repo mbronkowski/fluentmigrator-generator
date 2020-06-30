@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <package>
   <metadata>
-    <id>FluentMigrator.Generator</id>
-    <version>1.0.5</version>
-    <authors>Ritter Insurance Marketing, LLC</authors>
-    <projectUrl>https://github.com/ritterim/fluentmigrator-generator</projectUrl>
+    <id>Ps.FluentMigrator.Generator</id>
+    <version>1.0.0</version>
+    <authors>Ritter Insurance Marketing, LLC, Krystian Mikrut, Michał Bronkowski</authors>
+    <projectUrl>https://github.com/mbronkowski/fluentmigrator-generator</projectUrl>
     <licenseUrl>https://raw.githubusercontent.com/ritterim/fluentmigrator-generator/master/LICENSE</licenseUrl>
-    <releaseNotes>https://github.com/ritterim/fluentmigrator-generator/releases</releaseNotes>
+    <releaseNotes>https://github.com/mbronkowski/fluentmigrator-generator/releases</releaseNotes>
     <description>Adds a command to the package manager console to generate migrations for FluentMigrator.</description>
     <copyright>Copyright 2018 Ritter Insurance Marketing, LLC</copyright>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
