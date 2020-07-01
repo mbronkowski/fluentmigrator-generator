@@ -8,6 +8,8 @@ function addMig
         [string] $ProjectName)
     $timestamp = (Get-Date -Format yyyyMMddHHmmss)
     $class_name_timestamp = (Get-Date -Format yyyyMMdd_HHmmss)
+	$subfolder = (Get-Date -Format yyyyMM)
+	
 
     if ($ProjectName) {
         $project = Get-Project $ProjectName
@@ -19,14 +21,17 @@ function addMig
     else {
         $project = Get-Project
     }
+	
+	$description_for_file_name = $Description.Split([IO.Path]::GetInvalidFileNameChars()) -join '_'
     
-	$name = "Mig_" + "$class_name_timestamp"
+	$class_name = "Mig_" + "$class_name_timestamp"
+	$file_name = "Mig_" + "$class_name_timestamp" + "_" + "$env:UserName" + "_" + "$description_for_file_name"
 
 
     $namespace = $project.Properties.Item("DefaultNamespace").Value.ToString() + ".Migrations"
     $projectPath = [System.IO.Path]::GetDirectoryName($project.FullName)
-    $migrationsPath = [System.IO.Path]::Combine($projectPath, "Migrations")
-    $outputPath = [System.IO.Path]::Combine($migrationsPath, "$name" + ".cs")
+    $migrationsPath = [System.IO.Path]::Combine($projectPath, "Migrations", "$subfolder")
+    $outputPath = [System.IO.Path]::Combine($migrationsPath, "$file_name" + ".cs")
 
     if (-not (Test-Path $migrationsPath))
     {
@@ -38,7 +43,7 @@ function addMig
 namespace $namespace
 {
     [Migration($timestamp, `"$Description`")]
-    public class $name : Migration
+    public class $class_name : Migration
     {
         public override void Up()
         {
