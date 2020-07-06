@@ -19,7 +19,12 @@ function addMig
         }
     }
     else {
-        $project = Get-Project
+		$ProjectName = [System.IO.File]::ReadAllText([System.IO.Path]::GetDirectoryName($dte.Solution.FullName) + "\migrationProject.txt")
+        $project = Get-Project $ProjectName
+        if ($project -is [array])
+        {
+            throw "More than one project '$ProjectName' was found. Please specify the full name of the one to use."
+        }
     }
 	
 	$description_for_file_name = $Description.Split([IO.Path]::GetInvalidFileNameChars()) -join '_'
@@ -66,4 +71,16 @@ namespace $namespace
 	$DTE.ItemOperations.OpenFile("$outputPath",$DTE.Constants.vsViewKindTextView)
 }
 
+function addMigSlk
+{
+ [CmdletBinding(DefaultParameterSetName = 'Name')]
+    param (
+        [parameter(Position = 0,
+            Mandatory = $true)]
+        [string] $Description)
+	
+	addMig -Description "$Description"  -ProjectName "Ps.Slk.Migrator"
+}
+
 Export-ModuleMember @( 'addMig' )
+Export-ModuleMember @( 'addMigSlk' )
