@@ -63,6 +63,7 @@ namespace $namespace
 
     $project.ProjectItems.AddFromFile($outputPath)
     $project.Save($null)
+	$DTE.ItemOperations.OpenFile("$outputPath",$DTE.Constants.vsViewKindTextView)
 }
 
 Export-ModuleMember @( 'addMig' )
