@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Ps.FluentMigrator.Generator</id>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <authors>Ritter Insurance Marketing, LLC, Krystian Mikrut, Michał Bronkowski</authors>
     <projectUrl>https://github.com/mbronkowski/fluentmigrator-generator</projectUrl>
     <licenseUrl>https://raw.githubusercontent.com/ritterim/fluentmigrator-generator/master/LICENSE</licenseUrl>

@@ -27,7 +27,7 @@ function addMig
         }
     }
 	
-	$description_for_file_name = $Description.Split([IO.Path]::GetInvalidFileNameChars()) -join '_'
+	$description_for_file_name = $Description -replace '[\W]', '_'
     
 	$class_name = "Mig_" + "$class_name_timestamp"
 	$file_name = "Mig_" + "$class_name_timestamp" + "_" + "$env:UserName" + "_" + "$description_for_file_name"
